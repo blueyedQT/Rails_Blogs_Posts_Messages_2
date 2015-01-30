@@ -70,12 +70,26 @@
 
 	User.find(3).messages
 
-15.  Retrieve all posts associated with the first blog as well as all who left those posts
+****15.  Retrieve all posts associated with the first blog as well as all who left those posts
 	
-16.  Retrieve all messages associated with the 	first blog as well as all who left those messages
+	So, I was not sure what the correct way of going about this was.  Here is my solution, because I do not like to have multiple queries.
+		Post.find_by_sql("SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.blog_id = 1)
+
+	Another way that this could be done is in two seperate queries
+		posts = Blog.first.posts
+		users = 
+	
+
+****16.  Retrieve all messages associated with the 	first blog as well as all who left those messages
+
+	This is the same situation as above, and I much prefer my direct SQL queries, but for the sake of this exercise will try doing it ORM style.
+		users = User.join(:messages, :posts).where(posts: {blog:Blog.first})
+		messages = 
 
 17. Grab all user information of those that own the first blog
 
-	////Blog.first.owners.owners
+	Blog.first.users
 
 18.  Change it so that the first blog is no longer owned by the first user
+	
+	Owner.find_by(blog:Blog.first, user:User.first).destroy
