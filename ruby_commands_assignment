@@ -76,7 +76,7 @@
 		Post.find_by_sql("SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.blog_id = 1)
 
 	Another way that I just discovered that is awesome! (Thanks to Martin's searching)
-		Blog.find(2).posts.select('posts.*, users.*').joins(:user)
+		Blog.first.posts.select('posts.*, users.*').joins(:user)
 
 16.  Retrieve all messages associated with the 	first blog as well as all who left those messages
 

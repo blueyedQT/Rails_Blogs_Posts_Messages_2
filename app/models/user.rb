@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-	has_many :posts
-	has_many :messages
-	has_many :owners
+	has_many :posts, dependent: :destroy
+	has_many :messages, dependent: :destroy
+	has_many :owners, dependent: :destroy
 	has_many :blogs, :through => :owners
 	has_many :post, :through => :blogs
 
@@ -9,6 +9,6 @@ class User < ActiveRecord::Base
 	validates :first_name, :last_name, presence:true, length: { minimum: 2 }
 	validates :email_address, presence:true, uniqueness: { case_sensitive: false }, format: { with: EMAIL_REGEX }
 	before_save do 
-		self.email.downcase!
+		self.email_address.downcase!
 	end
 end
